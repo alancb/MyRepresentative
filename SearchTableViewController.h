@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SearchTableViewController.h
 //  WhoIsMyRep
 //
 //  Created by Caleb Hicks on 4/7/15.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SearchTableViewController : UITableViewController
 
 @end
-
