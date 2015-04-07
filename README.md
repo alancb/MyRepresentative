@@ -1,4 +1,4 @@
-# Stretch Problem - My Representative
+# My Representative
 
 A simple application that gets a list of representatives by zip code.
 
