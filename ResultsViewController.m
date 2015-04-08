@@ -28,7 +28,14 @@
     self.title = self.zipCode;
     
     self.searchController = [RepSearchController new];
-    self.representatives = [self.searchController representativesByZipCode:self.zipCode];
+    
+    [self.searchController representativesByZipCode:self.zipCode completion:^(NSArray *reps) {
+        self.representatives = reps;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    }];
+
 }
 
 - (void)didReceiveMemoryWarning {

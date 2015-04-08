@@ -10,23 +10,30 @@
 
 @implementation RepSearchController
 
-- (NSArray *)representativesByZipCode:(NSString *)zip {
+- (void)representativesByZipCode:(NSString *)zip completion:(void (^)(NSArray * reps))completion {
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://whoismyrepresentative.com/getall_mems.php?zip=%@&output=json", zip]];
     
-    NSError *error;
     
-    NSArray *representatives = [[NSJSONSerialization JSONObjectWithData:[NSData dataWithContentsOfURL:url] options:NSJSONReadingAllowFragments error:&error] objectForKey:@"results"];
-    
-    NSMutableArray *convertedReps = [NSMutableArray new];
-    
-    for (NSDictionary *dictionary in representatives) {
-        Representative *rep = [[Representative alloc] initWithDictionary:dictionary];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        [convertedReps addObject:rep];
-    }
+        NSDictionary *representatives = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil] objectForKey:@"results"];
+        NSLog(@"%@", error);
+        
+        NSMutableArray *convertedReps = [NSMutableArray new];
+        
+        for (NSDictionary *dictionary in representatives) {
+            Representative *rep = [[Representative alloc] initWithDictionary:dictionary];
+            
+            [convertedReps addObject:rep];
+        }
+        
+        completion(convertedReps);
+    }];
     
-    return convertedReps;
+    [dataTask resume];
+
 }
 
 @end

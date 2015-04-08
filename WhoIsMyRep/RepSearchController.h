@@ -11,6 +11,6 @@
 
 @interface RepSearchController : NSObject
 
-- (NSArray *)representativesByZipCode:(NSString *)zip;
+- (void)representativesByZipCode:(NSString *)zip completion:(void (^)(NSArray * reps))completion;
 
 @end
