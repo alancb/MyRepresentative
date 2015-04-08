@@ -14,11 +14,11 @@
     
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://whoismyrepresentative.com/getall_mems.php?zip=%@&output=json", zip]];
     
-    
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithURL:url completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         
-        NSDictionary *representatives = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil] objectForKey:@"results"];
+        NSArray *representatives = [[NSJSONSerialization JSONObjectWithData:data options:0 error:nil] objectForKey:@"results"];
+        
         NSLog(@"%@", error);
         
         NSMutableArray *convertedReps = [NSMutableArray new];
@@ -28,7 +28,6 @@
             
             [convertedReps addObject:rep];
         }
-        
         completion(convertedReps);
     }];
     

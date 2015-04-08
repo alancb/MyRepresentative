@@ -31,9 +31,11 @@
     
     [self.searchController representativesByZipCode:self.zipCode completion:^(NSArray *reps) {
         self.representatives = reps;
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.tableView reloadData];
         });
+        
     }];
 
 }
